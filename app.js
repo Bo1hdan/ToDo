@@ -1,27 +1,25 @@
-const form = document.querySelector('#new-task-form');
+const form = document.querySelector("#new-task-form");
 const h1 = document.querySelector("h1");
-const input = document.querySelector('#inputToDo');
-const list = document.querySelector('#tasks');
+const input = document.querySelector("#inputToDo");
+const list = document.querySelector("#tasks");
 
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const newTodo = input.value;
 
-form.addEventListener('submit', (e) =>{
-    e.preventDefault();    
-    const newTodo = input.value;
-
-    if(input.value ===""){
-        alert("You forgot your todo");
-        
-    }else{
-
+  if (input.value === "") {
+    alert("You forgot your todo");
+  } else {
     const newLi = document.createElement("div");
-    newLi.classList.add('task');
+    newLi.classList.add("task");
+    newLi.setAttribute("id", "styles");
 
-    const newLiEl = document.createElement('div');
-    newLiEl.classList.add('content');    
+    const newLiEl = document.createElement("div");
+    newLiEl.classList.add("content");
     newLi.append(newLiEl);
     list.appendChild(newLi);
 
-    const newInputEl = document.createElement('input');
+    const newInputEl = document.createElement("input");
     newInputEl.classList.add("text");
     newInputEl.type = "text";
     newInputEl.value = newTodo;
@@ -29,7 +27,7 @@ form.addEventListener('submit', (e) =>{
     newLiEl.appendChild(newInputEl);
     list.appendChild(newLi);
 
-    const actions = document.createElement('div');
+    const actions = document.createElement("div");
     actions.classList.add("actions");
 
     const buttonEdit = document.createElement("button");
@@ -37,42 +35,48 @@ form.addEventListener('submit', (e) =>{
     buttonEdit.innerHTML = "Edit";
 
     const buttonDel = document.createElement("button");
-    buttonDel.classList.add("delete")
+    buttonDel.classList.add("delete");
     buttonDel.innerHTML = "Delete";
-    
+
     actions.appendChild(buttonEdit);
     actions.appendChild(buttonDel);
-    
+
     newLi.appendChild(actions);
     list.appendChild(newLi);
-   
-    buttonEdit.addEventListener("click", () =>{
-        if(buttonEdit.innerText.toLowerCase() == "edit"){
+
+    buttonEdit.addEventListener("click", () => {
+      if (buttonEdit.innerText.toLowerCase() == "edit") {
         newInputEl.removeAttribute("readonly");
         newInputEl.focus();
         buttonEdit.innerText = "Save";
-        }else{
-            newInputEl.setAttribute("readonly", "readonly");
-            buttonEdit.innerText = "Edit";
-        }
+      } else {
+        newInputEl.setAttribute("readonly", "readonly");
+        buttonEdit.innerText = "Edit";
+      }
     });
-   
-    input.value ="";
-    h1.innerText= "What is your new ToDo";   
 
-    buttonDel.addEventListener('click', () =>{
-        newLi.remove();
-        
-    }) 
+    const taskes = document.querySelectorAll("#styles");
+    for (let x of taskes) {
+      x.addEventListener("click", colorizer);
     }
-   
-})
+
+    function colorizer() {
+      this.classList.toggle("myStyle");
+    }
+
+    input.value = "";
+    h1.innerText = "What is your new ToDo";
+
+    buttonDel.addEventListener("click", () => {
+      newLi.remove();
+    });
+  }
+});
 
 input.addEventListener("input", function (e) {
-    if (!this.value) {
-        h1.innerText = "What is your new ToDo"
-    } else {
-        h1.innerText = `I'm gonna ${this.value}`;        
-    }
-})
-
+  if (!this.value) {
+    h1.innerText = "What is your new ToDo";
+  } else {
+    h1.innerText = `I'm gonna ${this.value}`;
+  }
+});
